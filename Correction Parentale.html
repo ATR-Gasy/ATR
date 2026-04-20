@@ -7,42 +7,52 @@
   <meta name="description" content="Correction parentale à Madagascar : cadre juridique, limites, procédures en cas de maltraitance, alternatives éducatives et débat culturel." />
   <link rel="stylesheet" href="assets/css/main.css" />
 
-  <!-- Styles intégrés pour forcer le contenu à remplir la page -->
+  <!-- Styles intégrés pour largeur, espacement et éviter tout débordement hors du fond -->
   <style>
-    /* Forcer le contenu à occuper toute la largeur */
-    #wrapper, #main, .posts, article, .post {
+    /* Reset de base pour éviter marges inattendues */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow-x: hidden; /* Empêche tout débordement horizontal */
+      background: #ffffff; /* Couleur de fond de la "page blanche" */
+      color: #222;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    /* Wrapper plein écran et structure en colonne pour que le footer reste au bas */
+    #wrapper {
+      min-height: 100vh; /* occupe toute la hauteur visible */
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      background: #ffffff; /* même couleur que body pour éviter zones vides */
+    }
+
+    /* Main prend tout l'espace restant entre header et footer */
+    #main {
+      flex: 1 0 auto;
+      width: 100%;
+    }
+
+    /* Conteneurs de contenu : pleine largeur mais avec padding pour lisibilité */
+    #main, .posts, article, .post {
       width: 100% !important;
       max-width: none !important;
-      margin: 0 !important;
+      margin: 0 auto !important;
       padding-left: 20px;
       padding-right: 20px;
       box-sizing: border-box;
     }
 
-    /* Si votre thème utilise une classe .inner ou .container */
-    .container, .inner {
-      width: 100% !important;
-      max-width: none !important;
-      padding-left: 20px !important;
-      padding-right: 20px !important;
-    }
-
-    /* Images : occuper l'espace disponible */
-    .image img, .image.fit img, figure.image img {
-      width: 100% !important;
-      height: auto !important;
-      display: block !important;
-      object-fit: cover;
-    }
-
-    /* Ajustements pour grands écrans : garder lisibilité */
-    @media (min-width: 1200px) {
-      #main {
-        padding-left: 40px;
-        padding-right: 40px;
-      }
-    }
-
+    /* Limiter la largeur de lecture sur très grands écrans pour la lisibilité */
     @media (min-width: 1600px) {
       article {
         max-width: 1400px;
@@ -53,14 +63,47 @@
       }
     }
 
-    /* Optionnel : style du bouton retour pour cohérence */
-    .btn-return {
-      display: inline-block;
-      padding: 10px 15px;
-      background: #333;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
+    /* Conteneurs internes éventuels */
+    .container, .inner {
+      width: 100% !important;
+      max-width: none !important;
+      padding-left: 20px !important;
+      padding-right: 20px !important;
+    }
+
+    /* Images : occuper l'espace disponible sans débordement */
+    .image img, .image.fit img, figure.image img {
+      width: 100% !important;
+      max-width: 100%;
+      height: auto !important;
+      display: block !important;
+      object-fit: cover;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    /* Réduire l'espace autour des figures et images */
+    figure.image, figure.image.main, figure.image.fit {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      padding: 0;
+    }
+
+    /* Réduire l'espace vertical entre éléments pour éviter grands vides */
+    header, section, h1, h2, h3, p, ul, dl, figure {
+      margin-top: 0.35rem;
+    }
+
+    header .lead, .major .lead {
+      margin-bottom: 0.6rem;
+    }
+
+    /* Suppression d'espaces résiduels entre figure et section suivante */
+    figure.image + section,
+    figure.image + div,
+    figure.image + p {
+      margin-top: 0.2rem;
     }
 
     /* Encadré "À retenir" */
@@ -71,16 +114,35 @@
       margin: 20px 0;
     }
 
-    /* Amélioration typographique */
+    /* Bouton retour */
+    .btn-return {
+      display: inline-block;
+      padding: 10px 15px;
+      background: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    /* Typographie légère pour l'accroche */
     .lead {
       font-size: 1.05rem;
       line-height: 1.5;
       margin-bottom: 1rem;
     }
 
-    /* Assurer que les images ne débordent pas des sections */
-    figure.image {
-      margin: 0 0 1rem 0;
+    /* Footer collé en bas si contenu court */
+    #footer {
+      flex-shrink: 0;
+      padding: 16px 20px;
+      background: transparent;
+      text-align: center;
+    }
+
+    /* Assurer qu'aucun élément ne dépasse la "page blanche" */
+    img, video, iframe, table {
+      max-width: 100%;
+      overflow: hidden;
     }
   </style>
 </head>
@@ -99,8 +161,8 @@
             <p class="lead">La correction parentale regroupe les pratiques disciplinaires exercées par les parents ou toute personne ayant autorité sur un enfant. À Madagascar, la loi protège l’enfant contre toute forme de maltraitance tout en distinguant la discipline éducative légitime des comportements juridiquement répréhensibles.</p>
           </header>
 
-          <figure class="image fit">
-            <img src="images/correction.jpg" alt="Correction parentale et droit de l’enfant" />
+          <figure class="image fit" style="margin:0 0 0.6rem 0;padding:0;">
+            <img src="images/correction.jpg" alt="Correction parentale et droit de l’enfant" style="display:block;width:100%;height:auto;margin:0;padding:0;" />
             <figcaption>Correction parentale, protection de l'enfant et alternatives éducatives</figcaption>
           </figure>
 
@@ -157,7 +219,7 @@
 
             <p><strong>Traduction littérale :</strong> « L’enfant qu’on aime ne doit pas être épargné du bâton. »</p>
 
-            <p><strong>Références bibliques citées :</strong> « Celui qui ménage sa verge hait son fils, mais celui qui l'aime cherche à le corriger » Proverbes 13:24. Il y a aussi les Proverbes 22:15 et 23:13-14</p>
+            <p><strong>Références bibliques citées :</strong> Proverbes 13:24 (« Celui qui ménage sa verge hait son fils, mais celui qui l'aime cherche à le corriger) ; Proverbes 22:15 et 23:13-14</p>
 
             <p>Ces références influencent encore certaines pratiques éducatives traditionnelles et nourrissent des interprétations différentes de la discipline parentale.</p>
 
